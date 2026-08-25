@@ -168,8 +168,8 @@ export function DrillsPage() {
                       </div>
                     )}
                     {drill.diagram && (
-                      <div className="mt-3 rounded-lg overflow-hidden border border-slate-100 max-w-xs">
-                        <DrillDiagram sport={drill.sport} diagram={drill.diagram} className="w-full h-auto block" />
+                      <div className="mt-3 rounded-lg overflow-hidden border border-slate-100 max-w-xs aspect-[5/3]">
+                        <DrillDiagram sport={drill.sport} diagram={drill.diagram} className="w-full h-full block" />
                       </div>
                     )}
                     <div className="flex gap-2 mt-3">
