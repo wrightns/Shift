@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import type { Drill } from "../types";
 import { loadDrills, saveDrills } from "../lib/storage";
 import { newId } from "../lib/id";
+import { sportIcon } from "../lib/sportIcon";
+import { categoryChipColor } from "../lib/chipColor";
 
 function emptyDrill(): Drill {
   return {
@@ -71,78 +73,91 @@ export function DrillsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Drill Bank</h1>
-        <button
-          onClick={startNew}
-          className="px-4 py-2 bg-emerald-600 text-white rounded-md text-sm font-semibold hover:bg-emerald-700"
-        >
+    <div className="mx-auto max-w-5xl px-4 py-8">
+      <div className="flex items-start sm:items-center justify-between gap-4 mb-6 flex-col sm:flex-row">
+        <div>
+          <h1 className="font-display text-3xl font-bold text-slate-900 tracking-tight">Drill Bank</h1>
+          <p className="text-slate-500 text-sm mt-1">Your reusable library — pull any drill straight into a plan.</p>
+        </div>
+        <button onClick={startNew} className="btn btn-primary shrink-0">
           + New Drill
         </button>
       </div>
 
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search drills by name, sport, category, or tag..."
-        className="w-full mb-4 px-3 py-2 border border-slate-300 rounded-md text-sm"
-      />
+      <div className="relative mb-5">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden>
+          🔎
+        </span>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search drills by name, sport, category, or tag..."
+          className="input pl-9"
+        />
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
         <div className="space-y-3">
           {filtered.length === 0 && <p className="text-slate-500 text-sm">No drills found.</p>}
-          {filtered.map((drill) => (
-            <div key={drill.id} className="border border-slate-200 rounded-lg p-4 bg-white shadow-sm">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="font-semibold text-slate-900">{drill.name}</h3>
-                  <p className="text-xs text-slate-500">
-                    {[drill.sport, drill.category].filter(Boolean).join(" · ")} · {drill.defaultMinutes} min
-                  </p>
-                </div>
-                <div className="flex gap-1 shrink-0">
-                  <button
-                    onClick={() => startEdit(drill)}
-                    className="text-xs px-2 py-1 rounded border border-slate-300 hover:bg-slate-50"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => deleteDrill(drill.id)}
-                    className="text-xs px-2 py-1 rounded border border-red-300 text-red-600 hover:bg-red-50"
-                  >
-                    Delete
-                  </button>
+          {filtered.map((drill) => {
+            const chip = categoryChipColor(drill.category);
+            return (
+              <div
+                key={drill.id}
+                className={`card p-4 animate-in transition-shadow hover:shadow-md ${editing?.id === drill.id ? "ring-2 ring-teal-500" : ""}`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="w-10 h-10 shrink-0 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-lg">
+                    {sportIcon(drill.sport)}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-semibold text-slate-900 leading-tight">{drill.name}</h3>
+                      <span className="text-xs font-semibold text-slate-500 shrink-0 tabular-nums">{drill.defaultMinutes} min</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                      {drill.category && (
+                        <span className={`chip ${chip.bg} ${chip.text}`}>{drill.category}</span>
+                      )}
+                      {drill.sport && <span className="chip bg-slate-100 text-slate-600">{drill.sport}</span>}
+                    </div>
+                    {drill.description && <p className="text-sm text-slate-600 mt-2">{drill.description}</p>}
+                    {drill.equipment && <p className="text-xs text-slate-400 mt-2">🎒 {drill.equipment}</p>}
+                    {drill.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {drill.tags.map((t) => (
+                          <span key={t} className="text-[11px] bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={() => startEdit(drill)} className="btn btn-ghost !py-1 !px-2.5 text-xs">
+                        Edit
+                      </button>
+                      <button onClick={() => deleteDrill(drill.id)} className="btn btn-ghost !py-1 !px-2.5 text-xs text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+                        Delete
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              {drill.description && <p className="text-sm text-slate-600 mt-2">{drill.description}</p>}
-              {drill.equipment && (
-                <p className="text-xs text-slate-400 mt-2">Equipment: {drill.equipment}</p>
-              )}
-              {drill.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {drill.tags.map((t) => (
-                    <span key={t} className="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div>
+        <div className="sticky top-20">
           {editing ? (
-            <div className="border border-slate-200 rounded-lg p-4 bg-white shadow-sm sticky top-20">
-              <h3 className="font-semibold mb-3">{isNew ? "New Drill" : "Edit Drill"}</h3>
+            <div className="card p-5 animate-in">
+              <h3 className="font-semibold mb-3 text-slate-900">{isNew ? "New Drill" : "Edit Drill"}</h3>
               <div className="space-y-3">
                 <Field label="Name">
                   <input
                     className="input"
                     value={editing.name}
                     onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+                    autoFocus
                   />
                 </Field>
                 <div className="grid grid-cols-2 gap-3">
@@ -203,23 +218,16 @@ export function DrillsPage() {
                 </Field>
               </div>
               <div className="flex gap-2 mt-4">
-                <button
-                  onClick={saveEdit}
-                  disabled={!editing.name.trim()}
-                  className="px-4 py-2 bg-emerald-600 text-white rounded-md text-sm font-semibold hover:bg-emerald-700 disabled:opacity-50"
-                >
-                  Save
+                <button onClick={saveEdit} disabled={!editing.name.trim()} className="btn btn-primary">
+                  Save Drill
                 </button>
-                <button
-                  onClick={cancelEdit}
-                  className="px-4 py-2 border border-slate-300 rounded-md text-sm hover:bg-slate-50"
-                >
+                <button onClick={cancelEdit} className="btn btn-secondary">
                   Cancel
                 </button>
               </div>
             </div>
           ) : (
-            <div className="border border-dashed border-slate-300 rounded-lg p-8 text-center text-slate-400 text-sm">
+            <div className="border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center text-slate-400 text-sm">
               Select a drill to edit, or create a new one.
             </div>
           )}
@@ -232,7 +240,7 @@ export function DrillsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-xs font-medium text-slate-500 mb-1">{label}</span>
+      <span className="block text-xs font-semibold text-slate-500 mb-1">{label}</span>
       {children}
     </label>
   );

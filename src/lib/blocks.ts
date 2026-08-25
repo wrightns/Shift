@@ -189,3 +189,23 @@ export const SEGMENT_KIND_COLOR: Record<SegmentKind, string> = {
   transition: "bg-slate-400",
   other: "bg-slate-500",
 };
+
+export const SEGMENT_KIND_SOFT: Record<SegmentKind, { bg: string; text: string; ring: string }> = {
+  warmup: { bg: "bg-amber-50", text: "text-amber-700", ring: "ring-amber-200" },
+  drill: { bg: "bg-sky-50", text: "text-sky-700", ring: "ring-sky-200" },
+  game: { bg: "bg-emerald-50", text: "text-emerald-700", ring: "ring-emerald-200" },
+  talk: { bg: "bg-violet-50", text: "text-violet-700", ring: "ring-violet-200" },
+  break: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
+  transition: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
+  other: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
+};
+
+export const SEGMENT_KIND_ICON: Record<SegmentKind, string> = {
+  warmup: "🔥",
+  drill: "🏃",
+  game: "🏆",
+  talk: "💬",
+  break: "☕",
+  transition: "🔄",
+  other: "📌",
+};
