@@ -1,4 +1,4 @@
-import type { Drill } from "../../types";
+import type { Drill, DrillDiagram } from "../../types";
 import { newId } from "../../lib/id";
 
 export function makeDrillFactory(sport: string) {
@@ -9,5 +9,6 @@ export function makeDrillFactory(sport: string) {
     equipment: string,
     defaultMinutes: number,
     tags: string[],
-  ): Drill => ({ id: newId(), name, sport, category, description, equipment, defaultMinutes, tags });
+    diagram?: DrillDiagram,
+  ): Drill => ({ id: newId(), name, sport, category, description, equipment, defaultMinutes, tags, diagram });
 }

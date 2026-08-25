@@ -1,5 +1,30 @@
 export type Sport = string;
 
+export type DiagramTemplate =
+  | "equipment-course"
+  | "station-circuit"
+  | "passing-pattern"
+  | "wall-drill"
+  | "duel-1v1"
+  | "numbers-up"
+  | "finishing-station"
+  | "target-practice"
+  | "small-sided-game"
+  | "full-scrimmage"
+  | "team-shape"
+  | "set-piece"
+  | "lane-work"
+  | "rotation-diagram";
+
+export type DiagramEquipment = "cone" | "ladder" | "hurdle" | "wicket" | "block" | "wall";
+
+export interface DrillDiagram {
+  template: DiagramTemplate;
+  players?: number;
+  defenders?: number;
+  equipment?: DiagramEquipment[];
+}
+
 export interface Drill {
   id: string;
   name: string;
@@ -9,6 +34,7 @@ export interface Drill {
   equipment: string;
   defaultMinutes: number;
   tags: string[];
+  diagram?: DrillDiagram;
 }
 
 export type SegmentKind =
