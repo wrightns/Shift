@@ -2,9 +2,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { PracticePlan, Segment } from "../types";
 import { loadPlans } from "../lib/storage";
-import { flattenBlocks, SEGMENT_KIND_COLOR, SEGMENT_KIND_LABEL } from "../lib/blocks";
+import { flattenBlocks, SEGMENT_KIND_COLOR, SEGMENT_KIND_ICON, SEGMENT_KIND_LABEL, SEGMENT_KIND_SOFT } from "../lib/blocks";
 import { formatClock } from "../lib/time";
 import { playPracticeComplete, playSegmentAlarm, playTick, primeAudio } from "../lib/sound";
+import { ProgressRing } from "../components/ProgressRing";
 
 interface WakeLockSentinelLike {
   release: () => Promise<void>;
@@ -16,6 +17,7 @@ type NavigatorWithWakeLock = Navigator & {
 export function RunnerPage() {
   const { planId } = useParams();
   const [plan, setPlan] = useState<PracticePlan | null | undefined>(undefined);
+  const [scheduleOpen, setScheduleOpen] = useState(true);
 
   useEffect(() => {
     const plans = loadPlans();
@@ -175,7 +177,10 @@ export function RunnerPage() {
   if (plan === null) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-10 text-center text-slate-500">
-        Plan not found. <Link to="/plans" className="text-emerald-600 underline">Back to plans</Link>
+        Plan not found.{" "}
+        <Link to="/plans" className="text-teal-600 underline">
+          Back to plans
+        </Link>
       </div>
     );
   }
@@ -184,7 +189,7 @@ export function RunnerPage() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-10 text-center text-slate-500">
         <p className="mb-3">This plan has no timed blocks yet.</p>
-        <Link to={`/plans/${plan.id}`} className="text-emerald-600 underline">
+        <Link to={`/plans/${plan.id}`} className="text-teal-600 underline">
           Add some blocks
         </Link>
       </div>
@@ -192,6 +197,7 @@ export function RunnerPage() {
   }
 
   const current = segments[index];
+  const soft = SEGMENT_KIND_SOFT[current.kind];
   const totalSeconds = segments.reduce((s, seg) => s + seg.seconds, 0);
   const elapsedBefore = segments.slice(0, index).reduce((s, seg) => s + seg.seconds, 0);
   const elapsedInCurrent = Math.max(0, current.seconds - remaining);
@@ -199,142 +205,134 @@ export function RunnerPage() {
   const overallProgress = totalSeconds === 0 ? 1 : elapsedTotal / totalSeconds;
   const segmentProgress = current.seconds === 0 ? 1 : 1 - remaining / current.seconds;
   const next = segments[index + 1];
+  const urgent = running && remaining <= 3 && remaining > 0;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-6">
+    <div className="mx-auto max-w-4xl px-4 py-6 pb-8">
       <div className="flex items-center justify-between mb-4">
-        <Link to="/plans" className="text-sm text-slate-500 hover:text-slate-700">
-          ← Back to plans
+        <Link to="/plans" className="btn btn-ghost !px-2">
+          ← Back
         </Link>
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-semibold text-slate-700">{plan.name}</span>
-          <button
-            onClick={() => setMuted((m) => !m)}
-            className="text-xs px-2 py-1 rounded border border-slate-300 hover:bg-slate-50"
-          >
-            {muted ? "🔇 Muted" : "🔊 Sound On"}
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-slate-700 hidden sm:inline">{plan.name}</span>
+          <button onClick={() => setMuted((m) => !m)} className="btn btn-secondary !py-1.5 !px-3 text-xs">
+            {muted ? "🔇 Muted" : "🔊 Sound"}
           </button>
         </div>
       </div>
 
       {/* Overall progress */}
-      <div className="mb-6">
-        <div className="flex justify-between text-xs text-slate-500 mb-1">
+      <div className="mb-5">
+        <div className="flex justify-between text-xs text-slate-500 mb-1 font-medium">
           <span>Overall progress</span>
-          <span>
+          <span className="tabular-nums">
             {formatClock(elapsedTotal)} / {formatClock(totalSeconds)}
           </span>
         </div>
-        <div className="h-2 rounded-full bg-slate-200 overflow-hidden">
+        <div className="h-2.5 rounded-full bg-slate-200 overflow-hidden">
           <div
-            className="h-full bg-emerald-500 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-300"
             style={{ width: `${Math.min(100, overallProgress * 100)}%` }}
           />
         </div>
       </div>
 
       {completed ? (
-        <div className="text-center bg-emerald-50 border border-emerald-200 rounded-xl p-10 mb-6">
-          <p className="text-3xl mb-2">🎉</p>
-          <h2 className="text-2xl font-bold text-emerald-800 mb-1">Practice Complete!</h2>
-          <p className="text-emerald-700 text-sm mb-4">
-            Total time: {formatClock(totalSeconds)}
-          </p>
-          <button
-            onClick={restartPractice}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-md text-sm font-semibold hover:bg-emerald-700"
-          >
-            Restart Practice
+        <div className="text-center bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-10 mb-6 animate-in">
+          <p className="text-5xl mb-3">🎉</p>
+          <h2 className="font-display text-2xl font-bold text-emerald-800 mb-1">Practice Complete!</h2>
+          <p className="text-emerald-700 text-sm mb-5">Total time: {formatClock(totalSeconds)}</p>
+          <button onClick={restartPractice} className="btn btn-primary btn-lg">
+            ↻ Restart Practice
           </button>
         </div>
       ) : (
-        <div className="bg-white border border-slate-200 rounded-xl p-8 mb-6 text-center shadow-sm">
-          {current.breadcrumb.length > 0 && (
-            <p className="text-xs text-slate-400 mb-1">{current.breadcrumb.join(" › ")}</p>
-          )}
-          <span
-            className={`inline-block text-[11px] uppercase tracking-wide text-white px-2 py-0.5 rounded-full mb-2 ${SEGMENT_KIND_COLOR[current.kind]}`}
-          >
-            {SEGMENT_KIND_LABEL[current.kind]}
+        <div className={`rounded-2xl p-6 sm:p-8 mb-6 text-center shadow-sm border ${soft.bg} border-white/60 animate-in`}>
+          {current.breadcrumb.length > 0 && <p className="text-xs text-slate-500 mb-1">{current.breadcrumb.join(" › ")}</p>}
+          <span className={`chip ${soft.text} bg-white/70 mb-3`}>
+            {SEGMENT_KIND_ICON[current.kind]} {SEGMENT_KIND_LABEL[current.kind]}
           </span>
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">{current.label}</h2>
-          <div className="text-7xl font-mono font-bold text-slate-900 tabular-nums mb-4">
-            {formatClock(remaining)}
-          </div>
-          <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden max-w-xs mx-auto mb-6">
-            <div
-              className="h-full bg-sky-500 transition-all duration-200"
-              style={{ width: `${Math.min(100, segmentProgress * 100)}%` }}
-            />
-          </div>
+          <h2 className="font-display text-2xl font-bold text-slate-900 mb-5">{current.label}</h2>
 
-          <div className="flex items-center justify-center gap-2 flex-wrap">
-            <button
-              onClick={skipPrev}
-              disabled={index === 0}
-              className="px-3 py-2 rounded-md border border-slate-300 text-sm hover:bg-slate-50 disabled:opacity-30"
-            >
-              ⏮ Prev
+          <ProgressRing
+            progress={segmentProgress}
+            size={220}
+            strokeWidth={12}
+            trackColor="rgba(255,255,255,0.7)"
+            progressColor={urgent ? "#f43f5e" : "#0d9488"}
+            className={urgent ? "pulse-warn" : ""}
+          >
+            <span className={`font-display text-6xl font-bold tabular-nums ${urgent ? "text-rose-600" : "text-slate-900"}`}>
+              {formatClock(remaining)}
+            </span>
+          </ProgressRing>
+
+          <div className="flex items-center justify-center gap-2 flex-wrap mt-6">
+            <button onClick={skipPrev} disabled={index === 0} className="btn btn-secondary btn-icon" aria-label="Previous segment" title="Previous segment">
+              ⏮
             </button>
-            <button
-              onClick={restartSegment}
-              className="px-3 py-2 rounded-md border border-slate-300 text-sm hover:bg-slate-50"
-            >
-              ⟲ Restart Segment
+            <button onClick={restartSegment} className="btn btn-secondary" title="Restart this segment">
+              ⟲ Restart
             </button>
             {running ? (
-              <button
-                onClick={pause}
-                className="px-6 py-2 rounded-md bg-amber-500 text-white text-sm font-semibold hover:bg-amber-600"
-              >
+              <button onClick={pause} className="btn btn-warn btn-lg">
                 ⏸ Pause
               </button>
             ) : (
-              <button
-                onClick={start}
-                className="px-6 py-2 rounded-md bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700"
-              >
+              <button onClick={start} className="btn btn-primary btn-lg">
                 ▶ {index === 0 && remaining === current.seconds ? "Start Practice" : "Resume"}
               </button>
             )}
-            <button
-              onClick={skipNext}
-              className="px-3 py-2 rounded-md border border-slate-300 text-sm hover:bg-slate-50"
-            >
+            <button onClick={skipNext} className="btn btn-secondary" title="Skip to next segment">
               Next ⏭
             </button>
           </div>
 
-          {next && <p className="text-xs text-slate-400 mt-4">Up next: {next.label}</p>}
+          {next && <p className="text-xs text-slate-500 mt-4">Up next: {next.label}</p>}
         </div>
       )}
 
-      <h3 className="text-sm font-semibold text-slate-700 mb-2">Full Schedule</h3>
-      <ol className="space-y-1">
-        {segments.map((seg, i) => (
-          <li key={seg.id}>
-            <button
-              onClick={() => goToSegment(i, running)}
-              className={`w-full flex items-center justify-between gap-3 px-3 py-2 rounded-md text-left text-sm transition-colors ${
-                i === index
-                  ? "bg-emerald-50 border border-emerald-300"
-                  : i < index || completed
-                    ? "text-slate-400"
-                    : "hover:bg-slate-50 border border-transparent"
-              }`}
-            >
-              <span className="flex items-center gap-2 min-w-0">
-                <span className={`w-2 h-2 rounded-full shrink-0 ${SEGMENT_KIND_COLOR[seg.kind]}`} />
-                <span className="truncate">
-                  {seg.breadcrumb.length > 0 ? `${seg.breadcrumb.join(" › ")} — ` : ""}
-                  {seg.label}
-                </span>
-              </span>
-              <span className="shrink-0 tabular-nums">{formatClock(seg.seconds)}</span>
-            </button>
-          </li>
-        ))}
-      </ol>
+      <button
+        onClick={() => setScheduleOpen((v) => !v)}
+        className="w-full flex items-center justify-between text-sm font-semibold text-slate-700 mb-2 py-1"
+      >
+        <span>
+          Full Schedule <span className="text-slate-400 font-normal">({segments.length} segments)</span>
+        </span>
+        <span className={`text-slate-400 transition-transform ${scheduleOpen ? "rotate-180" : ""}`} aria-hidden>
+          ⌄
+        </span>
+      </button>
+      {scheduleOpen && (
+        <ol className="space-y-1 animate-in">
+          {segments.map((seg, i) => {
+            const isDone = i < index || completed;
+            const isCurrent = i === index && !completed;
+            return (
+              <li key={seg.id}>
+                <button
+                  onClick={() => goToSegment(i, running)}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-colors border ${
+                    isCurrent
+                      ? `${SEGMENT_KIND_SOFT[seg.kind].bg} border-transparent ring-1 ${SEGMENT_KIND_SOFT[seg.kind].ring}`
+                      : isDone
+                        ? "text-slate-400 border-transparent hover:bg-slate-50"
+                        : "hover:bg-slate-50 border-transparent"
+                  }`}
+                >
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${SEGMENT_KIND_COLOR[seg.kind]} ${isDone ? "opacity-40" : ""}`} />
+                  <span className="flex-1 min-w-0 truncate">
+                    {seg.breadcrumb.length > 0 ? `${seg.breadcrumb.join(" › ")} — ` : ""}
+                    {seg.label}
+                  </span>
+                  {isDone && <span aria-hidden>✓</span>}
+                  <span className="shrink-0 tabular-nums font-medium">{formatClock(seg.seconds)}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      )}
     </div>
   );
 }

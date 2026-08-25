@@ -4,7 +4,9 @@ import type { PracticePlan } from "../types";
 import { loadPlans, savePlans } from "../lib/storage";
 import { totalDurationSeconds } from "../lib/blocks";
 import { formatMinutesLabel } from "../lib/time";
+import { sportIcon } from "../lib/sportIcon";
 import { newId } from "../lib/id";
+import { ProgressRing } from "../components/ProgressRing";
 
 export function PlansPage() {
   const [plans, setPlans] = useState<PracticePlan[]>(() => loadPlans());
@@ -49,19 +51,26 @@ export function PlansPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-slate-900">Practice Plans</h1>
-        <button
-          onClick={createPlan}
-          className="px-4 py-2 bg-emerald-600 text-white rounded-md text-sm font-semibold hover:bg-emerald-700"
-        >
-          + New Plan
+    <div className="mx-auto max-w-5xl px-4 py-8">
+      <div className="flex items-start sm:items-center justify-between gap-4 mb-8 flex-col sm:flex-row">
+        <div>
+          <h1 className="font-display text-3xl font-bold text-slate-900 tracking-tight">Practice Plans</h1>
+          <p className="text-slate-500 text-sm mt-1">Build it once, run it right on time every time.</p>
+        </div>
+        <button onClick={createPlan} className="btn btn-primary">
+          <span aria-hidden>+</span> New Plan
         </button>
       </div>
 
       {plans.length === 0 && (
-        <p className="text-slate-500 text-sm">No practice plans yet. Create one to get started.</p>
+        <div className="card p-10 text-center animate-in">
+          <p className="text-4xl mb-3">🏟️</p>
+          <h3 className="font-semibold text-slate-800 mb-1">No practice plans yet</h3>
+          <p className="text-sm text-slate-500 mb-4">Create your first plan to start building out today's session.</p>
+          <button onClick={createPlan} className="btn btn-primary mx-auto">
+            + New Plan
+          </button>
+        </div>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -69,46 +78,56 @@ export function PlansPage() {
           const actualSeconds = totalDurationSeconds(plan.blocks);
           const actualMinutes = actualSeconds / 60;
           const overUnder = actualMinutes - plan.targetMinutes;
+          const ringProgress = plan.targetMinutes > 0 ? actualMinutes / plan.targetMinutes : 0;
+          const ringColor = overUnder > 0.5 ? "#f43f5e" : overUnder < -0.5 ? "#f59e0b" : "#14b8a6";
+
           return (
-            <div key={plan.id} className="border border-slate-200 rounded-lg p-4 bg-white shadow-sm flex flex-col">
-              <h3 className="font-semibold text-slate-900">{plan.name}</h3>
-              <p className="text-xs text-slate-500 mb-2">{plan.sport || "No sport set"}</p>
+            <div key={plan.id} className="card p-5 flex flex-col animate-in hover:shadow-lg hover:-translate-y-0.5 transition-all">
+              <div className="flex items-start gap-3 mb-3">
+                <span className="w-11 h-11 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xl">
+                  {sportIcon(plan.sport)}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold text-slate-900 truncate">{plan.name}</h3>
+                  <p className="text-xs text-slate-500">{plan.sport || "No sport set"}</p>
+                </div>
+                <ProgressRing progress={ringProgress} size={44} strokeWidth={5} progressColor={ringColor}>
+                  <span className="text-[10px] font-bold text-slate-600">{Math.round(ringProgress * 100)}%</span>
+                </ProgressRing>
+              </div>
+
               <p className="text-sm text-slate-600">
-                Target: {formatMinutesLabel(plan.targetMinutes)} · Planned: {formatMinutesLabel(actualMinutes)}
+                <span className="font-semibold text-slate-800">{formatMinutesLabel(actualMinutes)}</span> planned ·{" "}
+                {formatMinutesLabel(plan.targetMinutes)} target
               </p>
               {Math.abs(overUnder) >= 0.5 && (
-                <p className={`text-xs mt-1 ${overUnder > 0 ? "text-red-500" : "text-amber-600"}`}>
+                <p className={`text-xs mt-0.5 font-medium ${overUnder > 0 ? "text-rose-500" : "text-amber-600"}`}>
                   {overUnder > 0
                     ? `${formatMinutesLabel(overUnder)} over target`
                     : `${formatMinutesLabel(-overUnder)} under target`}
                 </p>
               )}
-              <p className="text-xs text-slate-400 mt-1">{plan.blocks.length} block{plan.blocks.length === 1 ? "" : "s"}</p>
+              <p className="text-xs text-slate-400 mt-1">
+                {plan.blocks.length} block{plan.blocks.length === 1 ? "" : "s"}
+              </p>
 
-              <div className="flex flex-wrap gap-2 mt-4">
-                <Link
-                  to={`/run/${plan.id}`}
-                  className="px-3 py-1.5 bg-emerald-600 text-white rounded-md text-xs font-semibold hover:bg-emerald-700"
-                >
-                  Run Practice
-                </Link>
-                <Link
-                  to={`/plans/${plan.id}`}
-                  className="px-3 py-1.5 border border-slate-300 rounded-md text-xs hover:bg-slate-50"
-                >
+              <Link to={`/run/${plan.id}`} className="btn btn-primary w-full mt-4">
+                ▶ Run Practice
+              </Link>
+              <div className="flex gap-2 mt-2">
+                <Link to={`/plans/${plan.id}`} className="btn btn-ghost flex-1 justify-center">
                   Edit
                 </Link>
-                <button
-                  onClick={() => duplicatePlan(plan)}
-                  className="px-3 py-1.5 border border-slate-300 rounded-md text-xs hover:bg-slate-50"
-                >
+                <button onClick={() => duplicatePlan(plan)} className="btn btn-ghost flex-1 justify-center">
                   Duplicate
                 </button>
                 <button
                   onClick={() => deletePlan(plan.id)}
-                  className="px-3 py-1.5 border border-red-300 text-red-600 rounded-md text-xs hover:bg-red-50"
+                  aria-label="Delete plan"
+                  title="Delete plan"
+                  className="btn btn-ghost text-rose-400 hover:text-rose-600 hover:bg-rose-50 px-2.5"
                 >
-                  Delete
+                  ✕
                 </button>
               </div>
             </div>
