@@ -4,6 +4,7 @@ import { loadDrills, saveDrills } from "../lib/storage";
 import { newId } from "../lib/id";
 import { sportIcon } from "../lib/sportIcon";
 import { categoryChipColor } from "../lib/chipColor";
+import { DrillDiagram } from "../components/diagram/DrillDiagram";
 
 function emptyDrill(): Drill {
   return {
@@ -164,6 +165,11 @@ export function DrillsPage() {
                             #{t}
                           </span>
                         ))}
+                      </div>
+                    )}
+                    {drill.diagram && (
+                      <div className="mt-3 rounded-lg overflow-hidden border border-slate-100 max-w-xs">
+                        <DrillDiagram sport={drill.sport} diagram={drill.diagram} className="w-full h-auto block" />
                       </div>
                     )}
                     <div className="flex gap-2 mt-3">
