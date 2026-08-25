@@ -21,20 +21,32 @@ function emptyDrill(): Drill {
 export function DrillsPage() {
   const [drills, setDrills] = useState<Drill[]>(() => loadDrills());
   const [query, setQuery] = useState("");
+  const [sportFilter, setSportFilter] = useState<string | null>(null);
   const [editing, setEditing] = useState<Drill | null>(null);
   const [isNew, setIsNew] = useState(false);
 
+  const sportCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const drill of drills) {
+      if (!drill.sport) continue;
+      counts.set(drill.sport, (counts.get(drill.sport) ?? 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  }, [drills]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return drills;
-    return drills.filter(
-      (d) =>
+    return drills.filter((d) => {
+      if (sportFilter && d.sport !== sportFilter) return false;
+      if (!q) return true;
+      return (
         d.name.toLowerCase().includes(q) ||
         d.sport.toLowerCase().includes(q) ||
         d.category.toLowerCase().includes(q) ||
-        d.tags.some((t) => t.toLowerCase().includes(q)),
-    );
-  }, [drills, query]);
+        d.tags.some((t) => t.toLowerCase().includes(q))
+      );
+    });
+  }, [drills, query, sportFilter]);
 
   function persist(next: Drill[]) {
     setDrills(next);
@@ -94,6 +106,28 @@ export function DrillsPage() {
           placeholder="Search drills by name, sport, category, or tag..."
           className="input pl-9"
         />
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 mb-6">
+        <button
+          onClick={() => setSportFilter(null)}
+          className={`chip transition-colors ${
+            sportFilter === null ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          }`}
+        >
+          All Sports ({drills.length})
+        </button>
+        {sportCounts.map(([sport, count]) => (
+          <button
+            key={sport}
+            onClick={() => setSportFilter(sport === sportFilter ? null : sport)}
+            className={`chip transition-colors ${
+              sportFilter === sport ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            }`}
+          >
+            {sportIcon(sport)} {sport} ({count})
+          </button>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">

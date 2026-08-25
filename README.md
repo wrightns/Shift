@@ -1,13 +1,13 @@
-# SportIT
+# Shift
 
 Sporting app that helps develop and stick to a practice plan.
 
-SportIT has three pieces:
+Shift has three pieces:
 
 - **Drill Bank** — a reusable library of drills (name, category, description, equipment, default duration, tags) you can pull into any practice plan.
 - **Practice Plan Builder** — build a day's practice out of blocks:
   - **Single blocks** — a one-off timed segment (e.g. "Warmup — 15 min"), optionally linked to a drill from the bank.
-  - **Interval blocks** — a repeating work/break cycle that fills a total duration, e.g. "15 minutes of small-sided games, stopping for a 30s team talk every 3 minutes." SportIT works out the number of reps automatically.
+  - **Interval blocks** — a repeating work/break cycle that fills a total duration, e.g. "15 minutes of small-sided games, stopping for a 30s team talk every 3 minutes." Shift works out the number of reps automatically.
   - **Group blocks** — a sequence of sub-blocks, e.g. two 10-minute stations run back to back.
 
   The builder shows your planned total against a target practice length so you can see at a glance if you're over or under.
@@ -24,3 +24,7 @@ npm run build    # type-check and build for production
 ```
 
 Practice plans and drills are persisted to the browser's `localStorage` — no backend required.
+
+## Deployment
+
+Pushes to `main` auto-deploy to GitHub Pages via `.github/workflows/deploy.yml`, publishing to `https://<owner>.github.io/Shift/`.

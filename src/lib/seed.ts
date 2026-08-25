@@ -1,59 +1,9 @@
-import type { Drill, PracticePlan } from "../types";
+import type { PracticePlan } from "../types";
 import { newGroupBlock, newIntervalBlock, newSingleBlock } from "./blocks";
 import { newId } from "./id";
+import { allDrills } from "../data/drills";
 
-export const seedDrills: Drill[] = [
-  {
-    id: newId(),
-    name: "Dynamic Warmup",
-    sport: "Soccer",
-    category: "Warmup",
-    description: "Jogging, high knees, butt kicks, lateral shuffles, and dynamic stretches to raise heart rate and prep joints.",
-    equipment: "Cones",
-    defaultMinutes: 15,
-    tags: ["warmup", "no-ball"],
-  },
-  {
-    id: newId(),
-    name: "Small-Sided Games (4v4)",
-    sport: "Soccer",
-    category: "Small-Sided Games",
-    description: "4v4 possession games in a tight grid to maximize touches and force quick decisions.",
-    equipment: "Cones, pinnies, 4+ balls",
-    defaultMinutes: 15,
-    tags: ["ssg", "possession"],
-  },
-  {
-    id: newId(),
-    name: "Passing Station",
-    sport: "Soccer",
-    category: "Technical",
-    description: "Partner passing progressing from stationary to one-touch, focused on first-touch quality.",
-    equipment: "Cones, balls",
-    defaultMinutes: 10,
-    tags: ["passing", "station"],
-  },
-  {
-    id: newId(),
-    name: "Shooting Station",
-    sport: "Soccer",
-    category: "Technical",
-    description: "Rotating shooting reps on goal from the top of the box with a server feeding balls.",
-    equipment: "Goals, balls, cones",
-    defaultMinutes: 10,
-    tags: ["shooting", "station"],
-  },
-  {
-    id: newId(),
-    name: "Full-Field Scrimmage",
-    sport: "Soccer",
-    category: "Game",
-    description: "Full-sided scrimmage to close practice and apply the day's theme in game conditions.",
-    equipment: "Goals, balls, pinnies",
-    defaultMinutes: 10,
-    tags: ["game", "scrimmage"],
-  },
-];
+export const seedDrills = allDrills;
 
 function buildSampleSoccerPlan(): PracticePlan {
   const warmup = newSingleBlock({
