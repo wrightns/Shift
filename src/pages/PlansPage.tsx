@@ -54,8 +54,8 @@ export function PlansPage() {
     <div className="mx-auto max-w-5xl px-4 py-8">
       <div className="flex items-start sm:items-center justify-between gap-4 mb-8 flex-col sm:flex-row">
         <div>
-          <h1 className="font-display text-3xl font-bold text-slate-900 tracking-tight">Practice Plans</h1>
-          <p className="text-slate-500 text-sm mt-1">Build it once, run it right on time every time.</p>
+          <h1 className="font-display text-3xl font-bold text-ink tracking-tight">Practice Plans</h1>
+          <p className="text-ink-dim text-sm mt-1">Build it once, run it right on time every time.</p>
         </div>
         <button onClick={createPlan} className="btn btn-primary">
           <span aria-hidden>+</span> New Plan
@@ -65,8 +65,8 @@ export function PlansPage() {
       {plans.length === 0 && (
         <div className="card p-10 text-center animate-in">
           <p className="text-4xl mb-3">🏟️</p>
-          <h3 className="font-semibold text-slate-800 mb-1">No practice plans yet</h3>
-          <p className="text-sm text-slate-500 mb-4">Create your first plan to start building out today's session.</p>
+          <h3 className="font-semibold text-ink mb-1">No practice plans yet</h3>
+          <p className="text-sm text-ink-dim mb-4">Create your first plan to start building out today's session.</p>
           <button onClick={createPlan} className="btn btn-primary mx-auto">
             + New Plan
           </button>
@@ -79,35 +79,35 @@ export function PlansPage() {
           const actualMinutes = actualSeconds / 60;
           const overUnder = actualMinutes - plan.targetMinutes;
           const ringProgress = plan.targetMinutes > 0 ? actualMinutes / plan.targetMinutes : 0;
-          const ringColor = overUnder > 0.5 ? "#f43f5e" : overUnder < -0.5 ? "#f59e0b" : "#14b8a6";
+          const ringColor = overUnder > 0.5 ? "#ff5d75" : overUnder < -0.5 ? "#ffb545" : "#22e6a6";
 
           return (
             <div key={plan.id} className="card p-5 flex flex-col animate-in hover:shadow-lg hover:-translate-y-0.5 transition-all">
               <div className="flex items-start gap-3 mb-3">
-                <span className="w-11 h-11 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xl">
+                <span className="w-11 h-11 shrink-0 rounded-xl bg-surface-2 border border-border flex items-center justify-center text-xl">
                   {sportIcon(plan.sport)}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-slate-900 truncate">{plan.name}</h3>
-                  <p className="text-xs text-slate-500">{plan.sport || "No sport set"}</p>
+                  <h3 className="font-semibold text-ink truncate">{plan.name}</h3>
+                  <p className="text-xs text-ink-dim">{plan.sport || "No sport set"}</p>
                 </div>
                 <ProgressRing progress={ringProgress} size={44} strokeWidth={5} progressColor={ringColor}>
-                  <span className="text-[10px] font-bold text-slate-600">{Math.round(ringProgress * 100)}%</span>
+                  <span className="text-[10px] font-bold text-ink-dim">{Math.round(ringProgress * 100)}%</span>
                 </ProgressRing>
               </div>
 
-              <p className="text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">{formatMinutesLabel(actualMinutes)}</span> planned ·{" "}
+              <p className="text-sm text-ink-dim">
+                <span className="font-semibold text-ink">{formatMinutesLabel(actualMinutes)}</span> planned ·{" "}
                 {formatMinutesLabel(plan.targetMinutes)} target
               </p>
               {Math.abs(overUnder) >= 0.5 && (
-                <p className={`text-xs mt-0.5 font-medium ${overUnder > 0 ? "text-rose-500" : "text-amber-600"}`}>
+                <p className={`text-xs mt-0.5 font-medium ${overUnder > 0 ? "text-danger" : "text-warn"}`}>
                   {overUnder > 0
                     ? `${formatMinutesLabel(overUnder)} over target`
                     : `${formatMinutesLabel(-overUnder)} under target`}
                 </p>
               )}
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-ink-faint mt-1">
                 {plan.blocks.length} block{plan.blocks.length === 1 ? "" : "s"}
               </p>
 
@@ -125,7 +125,7 @@ export function PlansPage() {
                   onClick={() => deletePlan(plan.id)}
                   aria-label="Delete plan"
                   title="Delete plan"
-                  className="btn btn-ghost text-rose-400 hover:text-rose-600 hover:bg-rose-50 px-2.5"
+                  className="btn btn-ghost text-danger/80 hover:text-danger hover:bg-danger-soft px-2.5"
                 >
                   ✕
                 </button>

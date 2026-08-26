@@ -3,10 +3,30 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-bg: #08090b;
+  --color-surface: #16171c;
+  --color-surface-2: #1d1e24;
+  --color-surface-3: #26272e;
+  --color-border: #2a2b32;
+  --color-border-strong: #3a3b44;
+
+  --color-ink: #f4f4f6;
+  --color-ink-dim: #9a9ca5;
+  --color-ink-faint: #6b6d76;
+
+  --color-brand: #22e6a6;
+  --color-brand-dim: #0fae7f;
+  --color-brand-soft: #103a2f;
+
+  --color-warn: #ffb545;
+  --color-warn-soft: #3a2c14;
+  --color-danger: #ff5d75;
+  --color-danger-soft: #3a1620;
 }
 
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 }
 
 html,
@@ -18,12 +38,13 @@ body,
 body {
   margin: 0;
   font-family: var(--font-sans);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background:
-    radial-gradient(1200px 500px at 100% -10%, rgba(20, 184, 166, 0.08), transparent),
-    radial-gradient(900px 400px at -10% 10%, rgba(249, 115, 22, 0.06), transparent),
-    #f7f8fa;
+    radial-gradient(1100px 480px at 100% -10%, rgba(34, 230, 166, 0.08), transparent),
+    radial-gradient(800px 380px at -10% 0%, rgba(34, 230, 166, 0.04), transparent),
+    var(--color-bg);
 }
 
 /* ---------- Form controls ---------- */
@@ -31,22 +52,22 @@ body {
 .input {
   width: 100%;
   border-radius: 0.75rem;
-  border: 1.5px solid #e2e8f0;
-  background: #fff;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-2);
   padding: 0.55rem 0.8rem;
   font-size: 0.875rem;
-  color: #0f172a;
+  color: var(--color-ink);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .input::placeholder {
-  color: #94a3b8;
+  color: var(--color-ink-faint);
 }
 
 .input:focus {
   outline: none;
-  border-color: #14b8a6;
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(34, 230, 166, 0.18);
 }
 
 /* ---------- Buttons ---------- */
@@ -71,62 +92,62 @@ body {
 }
 
 .btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #14b8a6, #0d9488);
-  color: white;
-  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.15), 0 4px 12px -4px rgba(15, 118, 110, 0.45);
+  background: linear-gradient(135deg, var(--color-brand), var(--color-brand-dim));
+  color: #04140f;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(34, 230, 166, 0.35);
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.2), 0 8px 20px -6px rgba(15, 118, 110, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(34, 230, 166, 0.5);
 }
 
 .btn-secondary {
-  background: white;
-  color: #0f172a;
-  border-color: #e2e8f0;
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+  border-color: var(--color-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  border-color: #14b8a6;
-  color: #0f766e;
-  background: #f0fdfa;
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .btn-ghost {
   background: transparent;
-  color: #475569;
+  color: var(--color-ink-dim);
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--color-surface-2);
+  color: var(--color-ink);
 }
 
 .btn-danger {
-  background: white;
-  color: #dc2626;
-  border-color: #fecaca;
+  background: transparent;
+  color: var(--color-danger);
+  border-color: rgba(255, 93, 117, 0.35);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: #fef2f2;
-  border-color: #fca5a5;
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
 }
 
 .btn-warn {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: white;
-  box-shadow: 0 1px 2px rgba(180, 83, 9, 0.15), 0 4px 12px -4px rgba(180, 83, 9, 0.5);
+  background: linear-gradient(135deg, #ffb545, #f2900f);
+  color: #241300;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(255, 181, 69, 0.4);
 }
 
 .btn-warn:hover:not(:disabled) {
-  box-shadow: 0 1px 2px rgba(180, 83, 9, 0.2), 0 8px 20px -6px rgba(180, 83, 9, 0.6);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(255, 181, 69, 0.55);
 }
 
 .btn-lg {
@@ -143,10 +164,10 @@ body {
 /* ---------- Surfaces ---------- */
 
 .card {
-  background: white;
-  border: 1px solid #eef1f5;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -16px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 12px 28px -18px rgba(0, 0, 0, 0.6);
 }
 
 .chip {
@@ -192,7 +213,7 @@ body {
 }
 
 ::selection {
-  background: rgba(20, 184, 166, 0.25);
+  background: rgba(34, 230, 166, 0.3);
 }
 
 /* Larger, easier-to-hit tap targets on touch devices (coaches on a phone, gloves, etc.) */

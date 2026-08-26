@@ -60,9 +60,9 @@ export function PlanBuilderPage() {
 
   if (!plan) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10 text-center text-slate-500">
+      <div className="mx-auto max-w-3xl px-4 py-10 text-center text-ink-dim">
         Plan not found.{" "}
-        <button className="text-teal-600 underline" onClick={() => navigate("/plans")}>
+        <button className="text-brand underline" onClick={() => navigate("/plans")}>
           Back to plans
         </button>
       </div>
@@ -86,7 +86,7 @@ export function PlanBuilderPage() {
 
       <div className="card p-5 mb-6">
         <label className="block mb-3">
-          <span className="block text-xs font-semibold text-slate-500 mb-1">Plan Name</span>
+          <span className="block text-xs font-semibold text-ink-dim mb-1">Plan Name</span>
           <input
             className="input font-display text-lg font-bold"
             value={plan.name}
@@ -95,11 +95,11 @@ export function PlanBuilderPage() {
         </label>
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
-            <span className="block text-xs font-semibold text-slate-500 mb-1">Sport</span>
+            <span className="block text-xs font-semibold text-ink-dim mb-1">Sport</span>
             <input className="input" value={plan.sport} onChange={(e) => mutate((p) => ({ ...p, sport: e.target.value }))} />
           </label>
           <label className="block">
-            <span className="block text-xs font-semibold text-slate-500 mb-1">Target Length (minutes)</span>
+            <span className="block text-xs font-semibold text-ink-dim mb-1">Target Length (minutes)</span>
             <input
               type="number"
               min={0}
@@ -110,17 +110,17 @@ export function PlanBuilderPage() {
           </label>
         </div>
         <label className="block mt-3">
-          <span className="block text-xs font-semibold text-slate-500 mb-1">Notes</span>
+          <span className="block text-xs font-semibold text-ink-dim mb-1">Notes</span>
           <textarea className="input min-h-16" value={plan.notes} onChange={(e) => mutate((p) => ({ ...p, notes: e.target.value }))} />
         </label>
 
         <div className="mt-5">
           <TimelineStrip blocks={plan.blocks} targetMinutes={plan.targetMinutes} />
           <div className="mt-2 flex items-center gap-3 text-sm flex-wrap">
-            <span className="font-semibold text-slate-700">{formatMinutesLabel(actualMinutes)} planned</span>
-            <span className="text-slate-400">/ {formatMinutesLabel(plan.targetMinutes)} target</span>
+            <span className="font-semibold text-ink">{formatMinutesLabel(actualMinutes)} planned</span>
+            <span className="text-ink-faint">/ {formatMinutesLabel(plan.targetMinutes)} target</span>
             {Math.abs(overUnder) >= 0.5 && (
-              <span className={`chip ${overUnder > 0 ? "bg-rose-50 text-rose-600" : "bg-amber-50 text-amber-700"}`}>
+              <span className={`chip ${overUnder > 0 ? "bg-danger-soft text-danger" : "bg-warn-soft text-warn"}`}>
                 {overUnder > 0 ? `${formatMinutesLabel(overUnder)} over` : `${formatMinutesLabel(-overUnder)} under`}
               </span>
             )}
@@ -128,10 +128,10 @@ export function PlanBuilderPage() {
         </div>
       </div>
 
-      <h2 className="font-display text-lg font-bold text-slate-900 mb-3">Practice Blocks</h2>
+      <h2 className="font-display text-lg font-bold text-ink mb-3">Practice Blocks</h2>
 
       {plan.blocks.length === 0 && (
-        <p className="text-sm text-slate-500 mb-3">
+        <p className="text-sm text-ink-dim mb-3">
           Add blocks to build your practice: single timed drills, repeating intervals (e.g. work/talk cycles), or groups of
           sequential stations. Tap a block to expand and edit it.
         </p>
@@ -159,9 +159,9 @@ export function PlanBuilderPage() {
         }}
       />
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 py-3">
+      <div className="fixed bottom-0 left-0 right-0 bg-bg/90 backdrop-blur-md border-t border-border py-3">
         <div className="mx-auto max-w-3xl px-4 flex items-center justify-between">
-          <span className="text-sm text-slate-500">{saved ? "All changes saved." : "You have unsaved changes."}</span>
+          <span className="text-sm text-ink-dim">{saved ? "All changes saved." : "You have unsaved changes."}</span>
           <div className="flex gap-2">
             <button onClick={() => navigate(`/run/${plan.id}`)} className="btn btn-secondary">
               ▶ Run Practice

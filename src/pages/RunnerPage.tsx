@@ -176,9 +176,9 @@ export function RunnerPage() {
   if (plan === undefined) return null;
   if (plan === null) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-10 text-center text-slate-500">
+      <div className="mx-auto max-w-2xl px-4 py-10 text-center text-ink-dim">
         Plan not found.{" "}
-        <Link to="/plans" className="text-teal-600 underline">
+        <Link to="/plans" className="text-brand underline">
           Back to plans
         </Link>
       </div>
@@ -187,9 +187,9 @@ export function RunnerPage() {
 
   if (segments.length === 0) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-10 text-center text-slate-500">
+      <div className="mx-auto max-w-2xl px-4 py-10 text-center text-ink-dim">
         <p className="mb-3">This plan has no timed blocks yet.</p>
-        <Link to={`/plans/${plan.id}`} className="text-teal-600 underline">
+        <Link to={`/plans/${plan.id}`} className="text-brand underline">
           Add some blocks
         </Link>
       </div>
@@ -214,7 +214,7 @@ export function RunnerPage() {
           ← Back
         </Link>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-slate-700 hidden sm:inline">{plan.name}</span>
+          <span className="text-sm font-semibold text-ink hidden sm:inline">{plan.name}</span>
           <button onClick={() => setMuted((m) => !m)} className="btn btn-secondary !py-1.5 !px-3 text-xs">
             {muted ? "🔇 Muted" : "🔊 Sound"}
           </button>
@@ -223,46 +223,46 @@ export function RunnerPage() {
 
       {/* Overall progress */}
       <div className="mb-5">
-        <div className="flex justify-between text-xs text-slate-500 mb-1 font-medium">
+        <div className="flex justify-between text-xs text-ink-dim mb-1 font-medium">
           <span>Overall progress</span>
           <span className="tabular-nums">
             {formatClock(elapsedTotal)} / {formatClock(totalSeconds)}
           </span>
         </div>
-        <div className="h-2.5 rounded-full bg-slate-200 overflow-hidden">
+        <div className="h-2.5 rounded-full bg-surface-2 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-brand to-brand-dim transition-all duration-300"
             style={{ width: `${Math.min(100, overallProgress * 100)}%` }}
           />
         </div>
       </div>
 
       {completed ? (
-        <div className="text-center bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-10 mb-6 animate-in">
+        <div className="text-center bg-brand-soft border border-brand/30 rounded-2xl p-10 mb-6 animate-in">
           <p className="text-5xl mb-3">🎉</p>
-          <h2 className="font-display text-2xl font-bold text-emerald-800 mb-1">Practice Complete!</h2>
-          <p className="text-emerald-700 text-sm mb-5">Total time: {formatClock(totalSeconds)}</p>
+          <h2 className="font-display text-2xl font-bold text-brand mb-1">Practice Complete!</h2>
+          <p className="text-ink-dim text-sm mb-5">Total time: {formatClock(totalSeconds)}</p>
           <button onClick={restartPractice} className="btn btn-primary btn-lg">
             ↻ Restart Practice
           </button>
         </div>
       ) : (
-        <div className={`rounded-2xl p-6 sm:p-8 mb-6 text-center shadow-sm border ${soft.bg} border-white/60 animate-in`}>
-          {current.breadcrumb.length > 0 && <p className="text-xs text-slate-500 mb-1">{current.breadcrumb.join(" › ")}</p>}
-          <span className={`chip ${soft.text} bg-white/70 mb-3`}>
+        <div className={`rounded-2xl p-6 sm:p-8 mb-6 text-center shadow-sm border ${soft.bg} border-border animate-in`}>
+          {current.breadcrumb.length > 0 && <p className="text-xs text-ink-dim mb-1">{current.breadcrumb.join(" › ")}</p>}
+          <span className={`chip ${soft.text} bg-surface-3 mb-3`}>
             {SEGMENT_KIND_ICON[current.kind]} {SEGMENT_KIND_LABEL[current.kind]}
           </span>
-          <h2 className="font-display text-2xl font-bold text-slate-900 mb-5">{current.label}</h2>
+          <h2 className="font-display text-2xl font-bold text-ink mb-5">{current.label}</h2>
 
           <ProgressRing
             progress={segmentProgress}
             size={220}
             strokeWidth={12}
-            trackColor="rgba(255,255,255,0.7)"
-            progressColor={urgent ? "#f43f5e" : "#0d9488"}
+            trackColor="#26272e"
+            progressColor={urgent ? "#ff5d75" : "#22e6a6"}
             className={urgent ? "pulse-warn" : ""}
           >
-            <span className={`font-display text-6xl font-bold tabular-nums ${urgent ? "text-rose-600" : "text-slate-900"}`}>
+            <span className={`font-display text-6xl font-bold tabular-nums ${urgent ? "text-danger" : "text-ink"}`}>
               {formatClock(remaining)}
             </span>
           </ProgressRing>
@@ -288,18 +288,18 @@ export function RunnerPage() {
             </button>
           </div>
 
-          {next && <p className="text-xs text-slate-500 mt-4">Up next: {next.label}</p>}
+          {next && <p className="text-xs text-ink-dim mt-4">Up next: {next.label}</p>}
         </div>
       )}
 
       <button
         onClick={() => setScheduleOpen((v) => !v)}
-        className="w-full flex items-center justify-between text-sm font-semibold text-slate-700 mb-2 py-1"
+        className="w-full flex items-center justify-between text-sm font-semibold text-ink mb-2 py-1"
       >
         <span>
-          Full Schedule <span className="text-slate-400 font-normal">({segments.length} segments)</span>
+          Full Schedule <span className="text-ink-faint font-normal">({segments.length} segments)</span>
         </span>
-        <span className={`text-slate-400 transition-transform ${scheduleOpen ? "rotate-180" : ""}`} aria-hidden>
+        <span className={`text-ink-faint transition-transform ${scheduleOpen ? "rotate-180" : ""}`} aria-hidden>
           ⌄
         </span>
       </button>
@@ -316,8 +316,8 @@ export function RunnerPage() {
                     isCurrent
                       ? `${SEGMENT_KIND_SOFT[seg.kind].bg} border-transparent ring-1 ${SEGMENT_KIND_SOFT[seg.kind].ring}`
                       : isDone
-                        ? "text-slate-400 border-transparent hover:bg-slate-50"
-                        : "hover:bg-slate-50 border-transparent"
+                        ? "text-ink-faint border-transparent hover:bg-surface-2"
+                        : "hover:bg-surface-2 border-transparent"
                   }`}
                 >
                   <span className={`w-2 h-2 rounded-full shrink-0 ${SEGMENT_KIND_COLOR[seg.kind]} ${isDone ? "opacity-40" : ""}`} />

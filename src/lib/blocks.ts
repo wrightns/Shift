@@ -191,13 +191,13 @@ export const SEGMENT_KIND_COLOR: Record<SegmentKind, string> = {
 };
 
 export const SEGMENT_KIND_SOFT: Record<SegmentKind, { bg: string; text: string; ring: string }> = {
-  warmup: { bg: "bg-amber-50", text: "text-amber-700", ring: "ring-amber-200" },
-  drill: { bg: "bg-sky-50", text: "text-sky-700", ring: "ring-sky-200" },
-  game: { bg: "bg-emerald-50", text: "text-emerald-700", ring: "ring-emerald-200" },
-  talk: { bg: "bg-violet-50", text: "text-violet-700", ring: "ring-violet-200" },
-  break: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
-  transition: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
-  other: { bg: "bg-slate-100", text: "text-slate-600", ring: "ring-slate-200" },
+  warmup: { bg: "bg-amber-500/10", text: "text-amber-300", ring: "ring-amber-500/30" },
+  drill: { bg: "bg-sky-500/10", text: "text-sky-300", ring: "ring-sky-500/30" },
+  game: { bg: "bg-emerald-500/10", text: "text-emerald-300", ring: "ring-emerald-500/30" },
+  talk: { bg: "bg-violet-500/10", text: "text-violet-300", ring: "ring-violet-500/30" },
+  break: { bg: "bg-surface-3", text: "text-ink-dim", ring: "ring-border-strong" },
+  transition: { bg: "bg-surface-3", text: "text-ink-dim", ring: "ring-border-strong" },
+  other: { bg: "bg-surface-3", text: "text-ink-dim", ring: "ring-border-strong" },
 };
 
 export const SEGMENT_KIND_ICON: Record<SegmentKind, string> = {

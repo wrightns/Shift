@@ -62,24 +62,24 @@ export function BlockEditor({
             <button
               type="button"
               onClick={() => onToggleExpand(block.id)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-slate-50/80 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-2/80 transition-colors"
             >
               <span className="text-lg shrink-0" aria-hidden>
                 {blockIcon(block)}
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-900 truncate">{block.name || "Untitled block"}</span>
-                  <span className="text-[10px] uppercase tracking-wide font-bold text-slate-400 shrink-0">
+                  <span className="font-semibold text-ink truncate">{block.name || "Untitled block"}</span>
+                  <span className="text-[10px] uppercase tracking-wide font-bold text-ink-faint shrink-0">
                     {block.type === "single" ? "" : block.type === "interval" ? "Interval" : "Group"}
                   </span>
                 </span>
-                <span className="block text-xs text-slate-500 truncate">{blockSummary(block)}</span>
+                <span className="block text-xs text-ink-dim truncate">{blockSummary(block)}</span>
               </span>
-              <span className="text-sm font-semibold text-slate-600 tabular-nums shrink-0">
+              <span className="text-sm font-semibold text-ink-dim tabular-nums shrink-0">
                 {formatMinutesLabel(blockDurationSeconds(block) / 60)}
               </span>
-              <span className={`text-slate-400 transition-transform shrink-0 ${isOpen ? "rotate-180" : ""}`} aria-hidden>
+              <span className={`text-ink-faint transition-transform shrink-0 ${isOpen ? "rotate-180" : ""}`} aria-hidden>
                 ⌄
               </span>
             </button>
@@ -97,10 +97,10 @@ export function BlockEditor({
             </div>
 
             {isOpen && (
-              <div className="px-4 pb-4 pt-1 border-t border-slate-100 animate-in">
+              <div className="px-4 pb-4 pt-1 border-t border-border animate-in">
                 {block.type === "single" && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
-                    <label className="text-xs font-semibold text-slate-500 sm:col-span-2">
+                    <label className="text-xs font-semibold text-ink-dim sm:col-span-2">
                       Name
                       <input
                         className="input mt-1"
@@ -108,7 +108,7 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "single" ? { ...b, name: e.target.value } : b))}
                       />
                     </label>
-                    <label className="text-xs font-semibold text-slate-500">
+                    <label className="text-xs font-semibold text-ink-dim">
                       Type
                       <select
                         className="input mt-1"
@@ -122,7 +122,7 @@ export function BlockEditor({
                         ))}
                       </select>
                     </label>
-                    <label className="text-xs font-semibold text-slate-500">
+                    <label className="text-xs font-semibold text-ink-dim">
                       Link a drill (optional)
                       <select
                         className="input mt-1"
@@ -151,7 +151,7 @@ export function BlockEditor({
                         ))}
                       </select>
                     </label>
-                    <label className="text-xs font-semibold text-slate-500">
+                    <label className="text-xs font-semibold text-ink-dim">
                       Minutes
                       <input
                         type="number"
@@ -161,7 +161,7 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "single" ? { ...b, minutes: Number(e.target.value) } : b))}
                       />
                     </label>
-                    <label className="text-xs font-semibold text-slate-500">
+                    <label className="text-xs font-semibold text-ink-dim">
                       Seconds
                       <input
                         type="number"
@@ -172,7 +172,7 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "single" ? { ...b, seconds: Number(e.target.value) } : b))}
                       />
                     </label>
-                    <label className="text-xs font-semibold text-slate-500 sm:col-span-2">
+                    <label className="text-xs font-semibold text-ink-dim sm:col-span-2">
                       Notes
                       <input
                         className="input mt-1"
@@ -185,7 +185,7 @@ export function BlockEditor({
 
                 {block.type === "interval" && (
                   <div className="space-y-3 pt-3">
-                    <label className="text-xs font-semibold text-slate-500 block">
+                    <label className="text-xs font-semibold text-ink-dim block">
                       Name
                       <input
                         className="input mt-1"
@@ -193,7 +193,7 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "interval" ? { ...b, name: e.target.value } : b))}
                       />
                     </label>
-                    <label className="text-xs font-semibold text-slate-500 block w-40">
+                    <label className="text-xs font-semibold text-ink-dim block w-40">
                       Total minutes
                       <input
                         type="number"
@@ -203,9 +203,9 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "interval" ? { ...b, totalMinutes: Number(e.target.value) } : b))}
                       />
                     </label>
-                    <div className="grid grid-cols-2 gap-3 bg-slate-50 rounded-xl p-3">
+                    <div className="grid grid-cols-2 gap-3 bg-surface-2 rounded-xl p-3">
                       <div className="space-y-2">
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">▶ Work interval</p>
+                        <p className="text-xs font-bold text-ink-dim uppercase tracking-wide">▶ Work interval</p>
                         <input
                           className="input"
                           placeholder="Label"
@@ -233,7 +233,7 @@ export function BlockEditor({
                         />
                       </div>
                       <div className="space-y-2">
-                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">⏸ Break interval</p>
+                        <p className="text-xs font-bold text-ink-dim uppercase tracking-wide">⏸ Break interval</p>
                         <input
                           className="input"
                           placeholder="Label"
@@ -261,11 +261,11 @@ export function BlockEditor({
                         />
                       </div>
                     </div>
-                    <p className="text-xs text-teal-700 bg-teal-50 rounded-lg px-3 py-2 inline-block">
+                    <p className="text-xs text-brand bg-brand-soft rounded-lg px-3 py-2 inline-block">
                       ≈ {Math.floor((block.totalMinutes * 60) / (block.workSeconds + block.breakSeconds || 1))} reps of{" "}
                       {block.workSeconds}s work / {block.breakSeconds}s break
                     </p>
-                    <label className="text-xs font-semibold text-slate-500 block">
+                    <label className="text-xs font-semibold text-ink-dim block">
                       Notes
                       <input
                         className="input mt-1"
@@ -278,7 +278,7 @@ export function BlockEditor({
 
                 {block.type === "group" && (
                   <div className="space-y-3 pt-3">
-                    <label className="text-xs font-semibold text-slate-500 block">
+                    <label className="text-xs font-semibold text-ink-dim block">
                       Name
                       <input
                         className="input mt-1"
@@ -286,7 +286,7 @@ export function BlockEditor({
                         onChange={(e) => onUpdate(block.id, (b) => (b.type === "group" ? { ...b, name: e.target.value } : b))}
                       />
                     </label>
-                    <label className="text-xs font-semibold text-slate-500 block">
+                    <label className="text-xs font-semibold text-ink-dim block">
                       Notes
                       <input
                         className="input mt-1"
@@ -295,7 +295,7 @@ export function BlockEditor({
                       />
                     </label>
 
-                    <div className="border-t border-dashed border-slate-200 pt-3">
+                    <div className="border-t border-dashed border-border-strong pt-3">
                       <BlockEditor
                         blocks={block.children}
                         drills={drills}
@@ -345,8 +345,8 @@ function IconButton({
       disabled={disabled}
       className={`w-7 h-7 flex items-center justify-center rounded-md text-xs border transition-colors ${
         danger
-          ? "border-transparent text-rose-400 hover:bg-rose-50 hover:text-rose-600"
-          : "border-transparent text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+          ? "border-transparent text-danger/70 hover:bg-danger-soft hover:text-danger"
+          : "border-transparent text-ink-faint hover:bg-surface-2 hover:text-ink"
       } disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-transparent`}
     >
       {children}
@@ -367,14 +367,14 @@ export function AddBlockButtons({ onAdd, compact }: { onAdd: (block: Block) => v
           key={opt.label}
           type="button"
           onClick={() => onAdd(opt.make())}
-          className="flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 border-dashed border-slate-200 text-left hover:border-teal-400 hover:bg-teal-50/50 transition-colors"
+          className="flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 border-dashed border-border-strong text-left hover:border-brand hover:bg-brand-soft/50 transition-colors"
         >
           <span className="text-lg" aria-hidden>
             {opt.icon}
           </span>
           <span>
-            <span className="block text-sm font-semibold text-slate-700">+ {opt.label}</span>
-            <span className="block text-[11px] text-slate-400">{opt.hint}</span>
+            <span className="block text-sm font-semibold text-ink">+ {opt.label}</span>
+            <span className="block text-[11px] text-ink-faint">{opt.hint}</span>
           </span>
         </button>
       ))}

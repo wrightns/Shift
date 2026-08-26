@@ -89,8 +89,8 @@ export function DrillsPage() {
     <div className="mx-auto max-w-5xl px-4 py-8">
       <div className="flex items-start sm:items-center justify-between gap-4 mb-6 flex-col sm:flex-row">
         <div>
-          <h1 className="font-display text-3xl font-bold text-slate-900 tracking-tight">Drill Bank</h1>
-          <p className="text-slate-500 text-sm mt-1">Your reusable library — pull any drill straight into a plan.</p>
+          <h1 className="font-display text-3xl font-bold text-ink tracking-tight">Drill Bank</h1>
+          <p className="text-ink-dim text-sm mt-1">Your reusable library — pull any drill straight into a plan.</p>
         </div>
         <button onClick={startNew} className="btn btn-primary shrink-0">
           + New Drill
@@ -98,7 +98,7 @@ export function DrillsPage() {
       </div>
 
       <div className="relative mb-5">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden>
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint" aria-hidden>
           🔎
         </span>
         <input
@@ -113,7 +113,7 @@ export function DrillsPage() {
         <button
           onClick={() => setSportFilter(null)}
           className={`chip transition-colors ${
-            sportFilter === null ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            sportFilter === null ? "bg-brand text-[#04140f]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
           }`}
         >
           All Sports ({drills.length})
@@ -123,7 +123,7 @@ export function DrillsPage() {
             key={sport}
             onClick={() => setSportFilter(sport === sportFilter ? null : sport)}
             className={`chip transition-colors ${
-              sportFilter === sport ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              sportFilter === sport ? "bg-brand text-[#04140f]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
             }`}
           >
             {sportIcon(sport)} {sport} ({count})
@@ -133,42 +133,42 @@ export function DrillsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
         <div className="space-y-3">
-          {filtered.length === 0 && <p className="text-slate-500 text-sm">No drills found.</p>}
+          {filtered.length === 0 && <p className="text-ink-dim text-sm">No drills found.</p>}
           {filtered.map((drill) => {
             const chip = categoryChipColor(drill.category);
             return (
               <div
                 key={drill.id}
-                className={`card p-4 animate-in transition-shadow hover:shadow-md ${editing?.id === drill.id ? "ring-2 ring-teal-500" : ""}`}
+                className={`card p-4 animate-in transition-shadow hover:shadow-md ${editing?.id === drill.id ? "ring-2 ring-brand" : ""}`}
               >
                 <div className="flex items-start gap-3">
-                  <span className="w-10 h-10 shrink-0 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-lg">
+                  <span className="w-10 h-10 shrink-0 rounded-lg bg-surface-2 border border-border flex items-center justify-center text-lg">
                     {sportIcon(drill.sport)}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold text-slate-900 leading-tight">{drill.name}</h3>
-                      <span className="text-xs font-semibold text-slate-500 shrink-0 tabular-nums">{drill.defaultMinutes} min</span>
+                      <h3 className="font-semibold text-ink leading-tight">{drill.name}</h3>
+                      <span className="text-xs font-semibold text-ink-dim shrink-0 tabular-nums">{drill.defaultMinutes} min</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                       {drill.category && (
                         <span className={`chip ${chip.bg} ${chip.text}`}>{drill.category}</span>
                       )}
-                      {drill.sport && <span className="chip bg-slate-100 text-slate-600">{drill.sport}</span>}
+                      {drill.sport && <span className="chip bg-surface-3 text-ink-dim">{drill.sport}</span>}
                     </div>
-                    {drill.description && <p className="text-sm text-slate-600 mt-2">{drill.description}</p>}
-                    {drill.equipment && <p className="text-xs text-slate-400 mt-2">🎒 {drill.equipment}</p>}
+                    {drill.description && <p className="text-sm text-ink-dim mt-2">{drill.description}</p>}
+                    {drill.equipment && <p className="text-xs text-ink-faint mt-2">🎒 {drill.equipment}</p>}
                     {drill.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {drill.tags.map((t) => (
-                          <span key={t} className="text-[11px] bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">
+                          <span key={t} className="text-[11px] bg-surface-2 text-ink-dim px-2 py-0.5 rounded-full border border-border">
                             #{t}
                           </span>
                         ))}
                       </div>
                     )}
                     {drill.diagram && (
-                      <div className="mt-3 rounded-lg overflow-hidden border border-slate-100 max-w-xs aspect-[5/3]">
+                      <div className="mt-3 rounded-lg overflow-hidden border border-border max-w-xs aspect-[5/3]">
                         <DrillDiagram sport={drill.sport} diagram={drill.diagram} className="w-full h-full block" />
                       </div>
                     )}
@@ -176,7 +176,7 @@ export function DrillsPage() {
                       <button onClick={() => startEdit(drill)} className="btn btn-ghost !py-1 !px-2.5 text-xs">
                         Edit
                       </button>
-                      <button onClick={() => deleteDrill(drill.id)} className="btn btn-ghost !py-1 !px-2.5 text-xs text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+                      <button onClick={() => deleteDrill(drill.id)} className="btn btn-ghost !py-1 !px-2.5 text-xs text-danger/80 hover:text-danger hover:bg-danger-soft">
                         Delete
                       </button>
                     </div>
@@ -190,7 +190,7 @@ export function DrillsPage() {
         <div className="sticky top-20">
           {editing ? (
             <div className="card p-5 animate-in">
-              <h3 className="font-semibold mb-3 text-slate-900">{isNew ? "New Drill" : "Edit Drill"}</h3>
+              <h3 className="font-semibold mb-3 text-ink">{isNew ? "New Drill" : "Edit Drill"}</h3>
               <div className="space-y-3">
                 <Field label="Name">
                   <input
@@ -267,7 +267,7 @@ export function DrillsPage() {
               </div>
             </div>
           ) : (
-            <div className="border-2 border-dashed border-slate-200 rounded-2xl p-10 text-center text-slate-400 text-sm">
+            <div className="border-2 border-dashed border-border-strong rounded-2xl p-10 text-center text-ink-faint text-sm">
               Select a drill to edit, or create a new one.
             </div>
           )}
@@ -280,7 +280,7 @@ export function DrillsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-xs font-semibold text-slate-500 mb-1">{label}</span>
+      <span className="block text-xs font-semibold text-ink-dim mb-1">{label}</span>
       {children}
     </label>
   );

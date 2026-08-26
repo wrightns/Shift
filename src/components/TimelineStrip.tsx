@@ -10,12 +10,12 @@ export function TimelineStrip({ blocks, targetMinutes }: { blocks: Block[]; targ
   const targetPct = Math.min(100, (targetSeconds / scale) * 100);
 
   if (segments.length === 0) {
-    return <div className="h-3.5 rounded-full bg-slate-100 border border-dashed border-slate-200" />;
+    return <div className="h-3.5 rounded-full bg-surface-2 border border-dashed border-border-strong" />;
   }
 
   return (
     <div className="relative h-3.5">
-      <div className="absolute inset-0 rounded-full overflow-hidden flex bg-slate-100 ring-1 ring-slate-200/70">
+      <div className="absolute inset-0 rounded-full overflow-hidden flex bg-surface-2 ring-1 ring-border">
         {segments.map((seg) => (
           <div
             key={seg.id}
@@ -27,7 +27,7 @@ export function TimelineStrip({ blocks, targetMinutes }: { blocks: Block[]; targ
       </div>
       {targetSeconds > 0 && targetSeconds < scale && (
         <div
-          className="absolute top-[-3px] bottom-[-3px] w-0.5 bg-slate-800/70 rounded-full"
+          className="absolute top-[-3px] bottom-[-3px] w-0.5 bg-ink/80 rounded-full"
           style={{ left: `${targetPct}%` }}
           title={`Target: ${formatMinutesLabel(targetMinutes)}`}
         />
