@@ -275,7 +275,7 @@ export function RunnerPage() {
               ⟲ Restart
             </button>
             {running ? (
-              <button onClick={pause} className="btn btn-warn btn-lg">
+              <button onClick={pause} className="btn btn-primary btn-lg">
                 ⏸ Pause
               </button>
             ) : (

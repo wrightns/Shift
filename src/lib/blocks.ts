@@ -191,7 +191,7 @@ export const SEGMENT_KIND_COLOR: Record<SegmentKind, string> = {
 };
 
 export const SEGMENT_KIND_SOFT: Record<SegmentKind, { bg: string; text: string; ring: string }> = {
-  warmup: { bg: "bg-amber-500/10", text: "text-amber-300", ring: "ring-amber-500/30" },
+  warmup: { bg: "bg-blue-400/10", text: "text-blue-300", ring: "ring-blue-400/30" },
   drill: { bg: "bg-sky-500/10", text: "text-sky-300", ring: "ring-sky-500/30" },
   game: { bg: "bg-emerald-500/10", text: "text-emerald-300", ring: "ring-emerald-500/30" },
   talk: { bg: "bg-violet-500/10", text: "text-violet-300", ring: "ring-violet-500/30" },
