@@ -258,8 +258,8 @@ export function RunnerPage() {
             progress={segmentProgress}
             size={220}
             strokeWidth={12}
-            trackColor="#26272e"
-            progressColor={urgent ? "#ff5d75" : "#22e6a6"}
+            trackColor="#1c2540"
+            progressColor={urgent ? "#ff5d75" : "#ff8a3d"}
             className={urgent ? "pulse-warn" : ""}
           >
             <span className={`font-display text-6xl font-bold tabular-nums ${urgent ? "text-danger" : "text-ink"}`}>

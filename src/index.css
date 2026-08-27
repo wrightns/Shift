@@ -4,23 +4,23 @@
   --font-sans: "Plus Jakarta Sans", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
 
-  --color-bg: #08090b;
-  --color-surface: #16171c;
-  --color-surface-2: #1d1e24;
-  --color-surface-3: #26272e;
-  --color-border: #2a2b32;
-  --color-border-strong: #3a3b44;
+  --color-bg: #060a16;
+  --color-surface: #0f1526;
+  --color-surface-2: #151d34;
+  --color-surface-3: #1c2540;
+  --color-border: #232c4a;
+  --color-border-strong: #313c63;
 
-  --color-ink: #f4f4f6;
-  --color-ink-dim: #9a9ca5;
-  --color-ink-faint: #6b6d76;
+  --color-ink: #f5f6fb;
+  --color-ink-dim: #9aa3c2;
+  --color-ink-faint: #666f92;
 
-  --color-brand: #22e6a6;
-  --color-brand-dim: #0fae7f;
-  --color-brand-soft: #103a2f;
+  --color-brand: #ff8a3d;
+  --color-brand-dim: #f2670f;
+  --color-brand-soft: #3a2410;
 
-  --color-warn: #ffb545;
-  --color-warn-soft: #3a2c14;
+  --color-warn: #ffcf5c;
+  --color-warn-soft: #3a2e10;
   --color-danger: #ff5d75;
   --color-danger-soft: #3a1620;
 }
@@ -42,8 +42,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background:
-    radial-gradient(1100px 480px at 100% -10%, rgba(34, 230, 166, 0.08), transparent),
-    radial-gradient(800px 380px at -10% 0%, rgba(34, 230, 166, 0.04), transparent),
+    radial-gradient(1100px 480px at 100% -10%, rgba(255, 138, 61, 0.10), transparent),
+    radial-gradient(900px 420px at -10% 5%, rgba(59, 100, 219, 0.10), transparent),
     var(--color-bg);
 }
 
@@ -67,7 +67,7 @@ body {
 .input:focus {
   outline: none;
   border-color: var(--color-brand);
-  box-shadow: 0 0 0 3px rgba(34, 230, 166, 0.18);
+  box-shadow: 0 0 0 3px rgba(255, 138, 61, 0.18);
 }
 
 /* ---------- Buttons ---------- */
@@ -99,12 +99,12 @@ body {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--color-brand), var(--color-brand-dim));
-  color: #04140f;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(34, 230, 166, 0.35);
+  color: #2b1400;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(255, 138, 61, 0.35);
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(34, 230, 166, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(255, 138, 61, 0.5);
 }
 
 .btn-secondary {
@@ -141,13 +141,13 @@ body {
 }
 
 .btn-warn {
-  background: linear-gradient(135deg, #ffb545, #f2900f);
-  color: #241300;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(255, 181, 69, 0.4);
+  background: linear-gradient(135deg, #ffcf5c, #eda610);
+  color: #2b1a00;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(255, 207, 92, 0.4);
 }
 
 .btn-warn:hover:not(:disabled) {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(255, 181, 69, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -6px rgba(255, 207, 92, 0.55);
 }
 
 .btn-lg {
@@ -213,7 +213,7 @@ body {
 }
 
 ::selection {
-  background: rgba(34, 230, 166, 0.3);
+  background: rgba(255, 138, 61, 0.3);
 }
 
 /* Larger, easier-to-hit tap targets on touch devices (coaches on a phone, gloves, etc.) */

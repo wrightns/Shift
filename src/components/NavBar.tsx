@@ -8,7 +8,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 function LogoMark() {
   return (
     <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dim flex items-center justify-center shadow-sm shadow-brand/30">
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#04140f" strokeWidth="2.2" strokeLinecap="round">
+      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#2b1400" strokeWidth="2.2" strokeLinecap="round">
         <circle cx="12" cy="13" r="7.5" />
         <path d="M12 13 L12 8.5" />
         <path d="M12 13 L15 13" />

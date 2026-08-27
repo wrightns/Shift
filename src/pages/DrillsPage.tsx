@@ -113,7 +113,7 @@ export function DrillsPage() {
         <button
           onClick={() => setSportFilter(null)}
           className={`chip transition-colors ${
-            sportFilter === null ? "bg-brand text-[#04140f]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
+            sportFilter === null ? "bg-brand text-[#2b1400]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
           }`}
         >
           All Sports ({drills.length})
@@ -123,7 +123,7 @@ export function DrillsPage() {
             key={sport}
             onClick={() => setSportFilter(sport === sportFilter ? null : sport)}
             className={`chip transition-colors ${
-              sportFilter === sport ? "bg-brand text-[#04140f]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
+              sportFilter === sport ? "bg-brand text-[#2b1400]" : "bg-surface-3 text-ink-dim hover:bg-surface-3/70"
             }`}
           >
             {sportIcon(sport)} {sport} ({count})

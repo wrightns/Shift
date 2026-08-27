@@ -79,7 +79,7 @@ export function PlansPage() {
           const actualMinutes = actualSeconds / 60;
           const overUnder = actualMinutes - plan.targetMinutes;
           const ringProgress = plan.targetMinutes > 0 ? actualMinutes / plan.targetMinutes : 0;
-          const ringColor = overUnder > 0.5 ? "#ff5d75" : overUnder < -0.5 ? "#ffb545" : "#22e6a6";
+          const ringColor = overUnder > 0.5 ? "#ff5d75" : overUnder < -0.5 ? "#ffcf5c" : "#ff8a3d";
 
           return (
             <div key={plan.id} className="card p-5 flex flex-col animate-in hover:shadow-lg hover:-translate-y-0.5 transition-all">
