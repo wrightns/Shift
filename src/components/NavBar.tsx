@@ -7,19 +7,19 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 function LogoMark() {
   return (
-    <svg viewBox="0 0 100 108" className="w-8 h-9" aria-hidden="true">
+    <svg viewBox="0 0 100 160" className="w-7 h-11" aria-hidden="true">
       <defs>
-        <linearGradient id="nav-logo-grad" x1="0" y1="0" x2="0.3" y2="1">
+        <linearGradient id="nav-logo-grad" x1="0" y1="0" x2="0.25" y2="1">
           <stop offset="0" stopColor="#4f8cff" />
           <stop offset="0.55" stopColor="#a35bd6" />
           <stop offset="1" stopColor="#ff8a3d" />
         </linearGradient>
       </defs>
       <path
-        d="M 68,20 L 30,20 C 20,20 14,28 14,37 C 14,46 20,52 30,52 L 60,52 C 70,52 76,60 76,69 C 76,80 68,88 56,88 L 24,88"
+        d="M 74,16 L 44,16 C 32,16 24,25 24,37 C 24,49 32,58 44,58 L 62,58 C 74,58 82,67 82,79 C 82,91 74,100 62,100 L 32,100"
         fill="none"
         stroke="url(#nav-logo-grad)"
-        strokeWidth="17"
+        strokeWidth="16"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
