@@ -7,15 +7,23 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 function LogoMark() {
   return (
-    <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dim flex items-center justify-center shadow-sm shadow-brand/30">
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="#2b1400" strokeWidth="2.2" strokeLinecap="round">
-        <circle cx="12" cy="13" r="7.5" />
-        <path d="M12 13 L12 8.5" />
-        <path d="M12 13 L15 13" />
-        <path d="M10 2.5 L14 2.5" />
-        <path d="M17.5 5 L16 6.5" />
-      </svg>
-    </span>
+    <svg viewBox="0 0 100 108" className="w-8 h-9" aria-hidden="true">
+      <defs>
+        <linearGradient id="nav-logo-grad" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0" stopColor="#4f8cff" />
+          <stop offset="0.55" stopColor="#a35bd6" />
+          <stop offset="1" stopColor="#ff8a3d" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M 68,20 L 30,20 C 20,20 14,28 14,37 C 14,46 20,52 30,52 L 60,52 C 70,52 76,60 76,69 C 76,80 68,88 56,88 L 24,88"
+        fill="none"
+        stroke="url(#nav-logo-grad)"
+        strokeWidth="17"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -25,7 +33,12 @@ export function NavBar() {
       <div className="mx-auto max-w-5xl px-4 flex items-center justify-between h-16">
         <div className="flex items-center gap-2">
           <LogoMark />
-          <span className="font-display font-bold text-lg text-ink tracking-tight">Shift</span>
+          <span
+            className="text-2xl text-ink tracking-wide"
+            style={{ fontFamily: "'Anton', sans-serif", transform: "skewX(-8deg)", display: "inline-block" }}
+          >
+            SHIFT
+          </span>
         </div>
         <nav className="flex items-center gap-1">
           <NavLink to="/plans" className={linkClass}>
