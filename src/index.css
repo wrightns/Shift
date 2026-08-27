@@ -4,19 +4,19 @@
   --font-sans: "Plus Jakarta Sans", system-ui, "Segoe UI", Roboto, sans-serif;
   --font-display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
 
-  --color-bg: #060a16;
+  --color-bg: #071020;
   --color-surface: #0f1526;
   --color-surface-2: #151d34;
   --color-surface-3: #1c2540;
   --color-border: #232c4a;
   --color-border-strong: #313c63;
 
-  --color-ink: #f5f6fb;
+  --color-ink: #e6ecf3;
   --color-ink-dim: #9aa3c2;
   --color-ink-faint: #666f92;
 
-  --color-brand: #ff8a3d;
-  --color-brand-dim: #f2670f;
+  --color-brand: #ff8a28;
+  --color-brand-dim: #e6790f;
   --color-brand-soft: #3a2410;
 
   --color-warn: #ffcf5c;
