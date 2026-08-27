@@ -29,10 +29,10 @@ export function NavBar() {
         </div>
         <nav className="flex items-center gap-1">
           <NavLink to="/plans" className={linkClass}>
-            <span aria-hidden>📋</span> Practice Plans
+            Plans
           </NavLink>
           <NavLink to="/drills" className={linkClass}>
-            <span aria-hidden>🗂️</span> Drill Bank
+            Drills
           </NavLink>
         </nav>
       </div>
